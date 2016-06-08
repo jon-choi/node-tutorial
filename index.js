@@ -11,6 +11,8 @@ app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+app.use(express.bodyParser());
+
 var mongoHost = 'localHost';
 var mongoPort = 27017;
 var collectionDriver;
@@ -23,9 +25,7 @@ mongoClient.open(function(err, mongoClient) {
     }
     var db = mongoClient.db("MyDatabase");
     collectionDriver = new CollectionDriver(db);
-})
-
-app.use(express.bodyParser());
+});
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -81,3 +81,4 @@ app.use(function (req,res) {
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
 });
+
